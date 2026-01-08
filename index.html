@@ -166,7 +166,7 @@ button {
         <h1 class="title glitch">DHURANDHAR</h1>
         <p id="typewriter"></p>
         <button onclick="playMusic()">▶ PLAY MISSION ANTHEM</button>
-        <div class="footer">Spy In CyberSuccess | Patriot Mode ON</div>
+        <div class="footer">Spy In CyberSuccess | Music Loading..</div>
         <audio id="song" src="dhurandhar.mp3"></audio>
     </div>
 </div>
@@ -191,31 +191,43 @@ const loadingInterval = setInterval(() => {
     bar.style.width = load + "%";
 }, 120);
 
-/* ---------- MATRIX ---------- */
+/* ---------- MATRIX (BOLD + DARK + LONG FADING LINES) ---------- */
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
 const chars = "DHURANDHAR0123456789";
-const size = 16;
-const cols = canvas.width / size;
-const drops = Array(Math.floor(cols)).fill(1);
+const size = 18;
+const cols = Math.floor(canvas.width / size);
+const drops = Array(cols).fill(1);
 
 function startMatrix() {
     setInterval(() => {
-        ctx.fillStyle = "rgba(0,0,0,0.12)";
-        ctx.fillRect(0,0,canvas.width,canvas.height);
-        ctx.fillStyle = "rgba(0,255,120,0.35)";
-        ctx.font = size + "px monospace";
 
-        drops.forEach((y,i)=>{
-            const text = chars[Math.floor(Math.random()*chars.length)];
-            ctx.fillText(text,i*size,y*size);
-            if (y*size > canvas.height && Math.random()>0.98) drops[i]=0;
+        /* slower fade = longer trails */
+        ctx.fillStyle = "rgba(0, 0, 0, 0.18)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.font = "bold " + size + "px monospace";
+        ctx.fillStyle = "rgba(0, 170, 80, 0.9)";
+
+        /* vertical trail glow */
+        ctx.shadowColor = "rgba(0, 255, 120, 0.35)";
+        ctx.shadowBlur = 10;
+
+        drops.forEach((y, i) => {
+            const char = chars[Math.floor(Math.random() * chars.length)];
+            ctx.fillText(char, i * size, y * size);
+
+            if (y * size > canvas.height && Math.random() > 0.97) {
+                drops[i] = 0;
+            }
             drops[i]++;
         });
-    },50);
+
+        ctx.shadowBlur = 0;
+    }, 50);
 }
 
 /* ---------- TYPEWRITER ---------- */
@@ -223,8 +235,7 @@ const text = `
 "Agar tum logon ke patakhe khatam ho gaye ho,
 toh main dhamaka shuru karu."
 
-"Hacker nahi hoon main,
-system ka antim update hoon."
+"Ghayal Hoon Isliye Ghatak Hoon"
 
 — DHURANDHAR MODE ACTIVATED —
 ACCESS GRANTED ██████████ 100%
