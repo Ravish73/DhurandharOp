@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dhurandhar | Cyber Spy Patriot</title>
+
+<style>
+/* ---------- GLOBAL ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: black;
+    font-family: "Courier New", monospace;
+    color: #7CFFD6;
+    overflow: hidden;
+}
+
+/* ---------- LOADING SCREEN ---------- */
+#loader {
+    position: fixed;
+    inset: 0;
+    background: black;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#loader h1 {
+    font-size: 2.2rem;
+    color: #00ff9c;
+    text-shadow: 0 0 15px #00ff9c;
+    animation: glitch 1s infinite;
+}
+
+#loader p {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.progress {
+    width: 300px;
+    height: 6px;
+    background: #111;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.progress span {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: #00ff9c;
+    box-shadow: 0 0 10px #00ff9c;
+}
+
+/* ---------- MATRIX ---------- */
+#matrix {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+}
+
+/* ---------- SCANLINE ---------- */
+.scanline {
+    position: fixed;
+    width: 100%;
+    height: 4px;
+    background: rgba(0,255,0,0.2);
+    animation: scan 4s linear infinite;
+    z-index: 3;
+}
+
+@keyframes scan {
+    from { top: 0; }
+    to { top: 100%; }
+}
+
+/* ---------- WRAPPER ---------- */
+.wrapper {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* ---------- CONTAINER ---------- */
+.container {
+    z-index: 2;
+    text-align: center;
+    padding: 40px 30px;
+    max-width: 800px;
+    background: rgba(0,0,0,0.55);
+    border-radius: 14px;
+    backdrop-filter: blur(2px);
+}
+
+/* ---------- TITLE ---------- */
+.title {
+    font-size: 4rem;
+    letter-spacing: 6px;
+}
+
+/* ---------- GLITCH ---------- */
+.glitch {
+    color: #00ffb3;
+    text-shadow: 2px 2px red, -2px -2px cyan;
+    animation: glitch 1s infinite;
+}
+
+@keyframes glitch {
+    0% { text-shadow: 2px 2px red; }
+    50% { text-shadow: -2px -2px cyan; }
+    100% { text-shadow: 2px 2px red; }
+}
+
+/* ---------- TYPEWRITER ---------- */
+#typewriter {
+    font-size: 1.2rem;
+    margin: 20px auto;
+    min-height: 180px;
+    white-space: pre-line;
+    text-shadow: 0 0 8px rgba(0,255,180,0.6);
+}
+
+/* ---------- BUTTON ---------- */
+button {
+    background: transparent;
+    border: 2px solid #00ff9c;
+    color: #00ff9c;
+    padding: 12px 30px;
+    cursor: pointer;
+}
+
+/* ---------- FOOTER ---------- */
+.footer {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOADING SCREEN -->
+<div id="loader">
+    <h1>SYSTEM OVERLOAD</h1>
+    <p>Injecting Payload • Bypassing Firewall • Accessing Core</p>
+    <div class="progress"><span id="bar"></span></div>
+</div>
+
+<!-- MATRIX -->
+<canvas id="matrix"></canvas>
+<div class="scanline"></div>
+
+<!-- MAIN CONTENT -->
+<div class="wrapper" id="main">
+    <div class="container">
+        <h1 class="title glitch">DHURANDHAR</h1>
+        <p id="typewriter"></p>
+        <button onclick="playMusic()">▶ PLAY MISSION ANTHEM</button>
+        <div class="footer">Spy In CyberSuccess | Patriot Mode ON</div>
+        <audio id="song" src="dhurandhar.mp3"></audio>
+    </div>
+</div>
+
+<script>
+/* ---------- LOADER ---------- */
+let load = 0;
+const bar = document.getElementById("bar");
+const loader = document.getElementById("loader");
+const main = document.getElementById("main");
+
+const loadingInterval = setInterval(() => {
+    load += Math.floor(Math.random() * 8);
+    if (load >= 100) {
+        load = 100;
+        clearInterval(loadingInterval);
+        loader.style.display = "none";
+        main.style.display = "flex";
+        startMatrix();
+        typeEffect();
+    }
+    bar.style.width = load + "%";
+}, 120);
+
+/* ---------- MATRIX ---------- */
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+const chars = "DHURANDHAR0123456789";
+const size = 16;
+const cols = canvas.width / size;
+const drops = Array(Math.floor(cols)).fill(1);
+
+function startMatrix() {
+    setInterval(() => {
+        ctx.fillStyle = "rgba(0,0,0,0.12)";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle = "rgba(0,255,120,0.35)";
+        ctx.font = size + "px monospace";
+
+        drops.forEach((y,i)=>{
+            const text = chars[Math.floor(Math.random()*chars.length)];
+            ctx.fillText(text,i*size,y*size);
+            if (y*size > canvas.height && Math.random()>0.98) drops[i]=0;
+            drops[i]++;
+        });
+    },50);
+}
+
+/* ---------- TYPEWRITER ---------- */
+const text = `
+"Agar tum logon ke patakhe khatam ho gaye ho,
+toh main dhamaka shuru karu."
+
+"Hacker nahi hoon main,
+system ka antim update hoon."
+
+— DHURANDHAR MODE ACTIVATED —
+ACCESS GRANTED ██████████ 100%
+`;
+
+let i = 0;
+function typeEffect(){
+    if(i < text.length){
+        document.getElementById("typewriter").innerHTML += text[i++];
+        setTimeout(typeEffect,40);
+    }
+}
+
+/* ---------- MUSIC ---------- */
+function playMusic(){
+    document.getElementById("song").play();
+}
+</script>
+
+</body>
+</html>
